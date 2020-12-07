@@ -102,3 +102,16 @@ dist
 
 # TernJS port file
 .tern-port
+
+# VSCode
+.vscode/
+
+# VIM
+*.swp
+
+##### Ignore pra files do projeto
+server/node_modules/
+server/build/
+
+# Arquivo de configuracao do banco de dados
+server/src/key.ts
