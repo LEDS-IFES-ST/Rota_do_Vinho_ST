@@ -2,7 +2,7 @@
 Novo repositório do sistema da Rota do Vinho da Avist
 # Instalacao
 
-* NPM
+* NPM / YARN 
 * Mysql
 
  Ambiente  
@@ -171,3 +171,60 @@ Nessa chamada aqui retornar TODAS as informacoes necessarias pra montar a pag. d
 ]
 
 ```
+
+### FRONT-END WEB
+
+##### Iniciando
+
+*~necessario estar na pasta WEB;
+	
+*~caso tenha apenas instalado o NPM, favor instalar o YARN em https://classic.yarnpkg.com/pt-BR/docs/install
+
+* Primeiro passo é instalar o CLI (Command Line Interface) do ReactJS
+	
+	*yarn install -g create-react-app
+	
+* Segundo passo ser instalar as dependencias da aplicação web. 
+	
+	*yarn install 
+
+	###### Depedencias utilizadas. 	
+	*Axios: Cliente HTTP usado para enviar requisições à API;
+	*PropTypes: Lib para chegagem de tipo das props de componentes React;
+	*ReactRouter:Lib implementação de navegação na aplicação;
+	*StyledComponents: Lib usada estilização dos componentes.
+	*Font Awesome: Lib de fontes de ícones.
+
+
+##### Estrutura
+	
+		*src/
+		 *|--- assets/   # Aqui ficará as imagens
+		 *|--- configs/  # Variáveis de configurações
+		 *|--- pages/    # As nossas páginas 
+		 *|--- index.css/   # Estilos globais
+		 *|--- App.js    # Arquivo que conterá configurações principais do App
+		 *|--- routes.js # Arquivo contendo as principais rotas do App
+		 
+##### Comandos
+	
+	###### yarn Start
+			
+			*Inicia o servidor de desenvolvimento.
+
+	######	yarn build
+    Empacota o aplicativo em arquivos estáticos para produção.
+
+
+	######  yarn eject ** NÃO UTILIZAR ** 
+    Remove esta ferramenta e copia dependências de construção, arquivos de configuração
+    e scripts no diretório do aplicativo. Se você fizer isso, você não pode voltar!
+	
+	
+	
+### FRONT-END MOBILE
+
+	* Apenas pasta para implementações futuras.
+	
+		*Construindo App com Mapa usando React Native Maps e MapBox
+			* https://blog.rocketseat.com.br/construindo-um-app-com-mapas-usando-react-native-maps-e-mapbox/
