@@ -16,6 +16,12 @@ class EmpresaController {
         res.json(vinicolas);
     }
 
+    public async getEmpresaByID(req: Request, res: Response){
+        const idEmpresa = req.params.id;
+        const empresa = await pool.query('select * from Empresa where codEmpresa = ?', [idEmpresa] );
+        res.json(empresa);
+    }
+
     public async getAvistInfo(req: Request, res: Response): Promise<any> {
         const avist = await pool.query('select * from Empresa where Empresa.nomeEmpresa = "Avist"');
         return res.json(avist);
@@ -33,15 +39,6 @@ class EmpresaController {
             retorno: req.body
         });
     }
-
-
-
-
-
-
-
-
-
 
 
 
