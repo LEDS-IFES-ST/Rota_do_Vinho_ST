@@ -20,8 +20,6 @@ class ImagemController {
         res.json(imagem);
     }
 
-    // Recebe apenas o path
-    // Adaptar pra receber upload do frontend (usando Multer?)
     public async create(req: Request, res: Response): Promise<void> {
         await pool.query('insert into Imagem set ? ', [req.body])
         res.json({
