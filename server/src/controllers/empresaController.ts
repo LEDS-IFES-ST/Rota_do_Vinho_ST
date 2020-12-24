@@ -20,6 +20,13 @@ class EmpresaController {
         const avist = await pool.query('select * from Empresa where Empresa.nomeEmpresa = "Avist"');
         return res.json(avist);
     }
+    
+    public async getEmpresaByID(req: Request, res: Response): Promise<any>{
+        const id = req.params.id;
+        var str = id.split(',', 2);
+        const empresa = await pool.query('select * from Empresa where codEmpresa = ?', str[0]);
+        res.json(empresa);
+    }
 
     public async showAll(req: Request, res: Response) {
         const empresas = await pool.query('select * from Empresa');

@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import { pool } from '../database';
+import multer, { Multer } from "multer";
+
 
 
 class ImagemController {
@@ -13,6 +15,8 @@ class ImagemController {
         const imagem = await pool.query('select * from Imagem');
         res.json(imagem);
     }
+
+
     public async getImagemByID(req: Request, res: Response) {
         const id = req.params.id;
         var str = id.split(',', 2);
@@ -56,9 +60,6 @@ class ImagemController {
         return res.json(list);
     }
 
-    /*
-        
-    */
     public async ftosVinicolaByID(req: Request, res: Response): Promise<any> {
         const id = req.params.id;
         var str = id.split(',', 2);
@@ -76,6 +77,23 @@ class ImagemController {
         return res.json({ list });
 
     }
+
+
+    public async uploadImg(req: Request, res: Response): Promise<any> {
+        var file = req.file;
+        if (!file) {
+            res.status(401);
+            res.json('Deu merda migao')
+        }else{
+            res.status(200);
+            res.json(file);
+            // Pegar os outros dados da requisicao:
+            //-> idVinicola  
+            //-> tipoImagem
+            // Inserir no BD fazendo a referencia do retorno
+        }
+    }
+
 
 
 }
