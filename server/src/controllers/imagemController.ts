@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { pool } from '../database';
-import multer, { Multer } from "multer";
 
 
 
@@ -78,19 +77,43 @@ class ImagemController {
 
     }
 
+    // public async addImg(file: Express.Multer.File, req: Request): Promise<any>{
+    //     var path = file.destination;
+    //     console.log("path", path);
+    //     try {
+    //        pool.query('insert into Imagem') 
+    //        return true;
+    //     } catch (error) {
+    //        return false; 
+    //     }
+    //     return true;
+    // }
 
     public async uploadImg(req: Request, res: Response): Promise<any> {
-        var file = req.file;
-        if (!file) {
-            res.status(401);
-            res.json('Deu merda migao')
-        }else{
-            res.status(200);
-            res.json(file);
-            // Pegar os outros dados da requisicao:
-            //-> idVinicola  
-            //-> tipoImagem
-            // Inserir no BD fazendo a referencia do retorno
+        try {
+            var file = req.file;
+            // var addeu = this.addImg(file, req);
+            this.teste();
+            if (!file) {
+                res.status(401);
+                res.json('Something went wrong. Report this error')
+            } else {
+                if (true) {
+                    // console.log("-> ", addeu)
+                    res.status(200);
+                    res.json('ok');
+                } else {
+                    res.json('Deu nao migao')
+                }
+                // Pegar os outros dados da requisicao:
+                // req.body.idVinicola -> idVinicola  
+                /// -> tipoImagem (consultar doc.)
+                // Inserir no BD fazendo a referencia do retorno
+                // Monto o objeto imagem e mando pro metodo p. add!
+
+            }
+        } catch (err) {
+            console.log(err)
         }
     }
 

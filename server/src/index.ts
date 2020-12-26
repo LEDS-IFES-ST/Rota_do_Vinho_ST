@@ -2,12 +2,6 @@ import express, {Application} from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 
-// testando 
-// import uploads from './controllers/upload'; -> n funciona essa bosta 
-var multer  = require('multer')
-var uploads = multer({ dest: './upload/' })
-//
-
 import indexRoutes from './routes/indexRoutes';
 import empresaRoutes from './routes/empresaRoutes'
 import vinicolasRoutes from './routes/vinicolasRoutes';
