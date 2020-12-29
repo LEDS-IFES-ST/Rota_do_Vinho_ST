@@ -77,23 +77,9 @@ class ImagemController {
 
     }
 
-    // public async addImg(file: Express.Multer.File, req: Request): Promise<any>{
-    //     var path = file.destination;
-    //     console.log("path", path);
-    //     try {
-    //        pool.query('insert into Imagem') 
-    //        return true;
-    //     } catch (error) {
-    //        return false; 
-    //     }
-    //     return true;
-    // }
-
     public async uploadImg(req: Request, res: Response): Promise<any> {
         try {
             var file = req.file;
-            // var addeu = this.addImg(file, req);
-            this.teste();
             if (!file) {
                 res.status(401);
                 res.json('Something went wrong. Report this error')

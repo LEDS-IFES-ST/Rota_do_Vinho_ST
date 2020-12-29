@@ -1,6 +1,7 @@
 import multer from "multer";
 
 
+// Config do middleware do Multer (file uploading)
 export const storage = multer.diskStorage({
     filename: function (req: Express.Request,
         file: Express.Multer.File,
@@ -31,4 +32,3 @@ export const imgFilter = function (req: Express.Request,
         console.log("-----", error)
     }
 }
-

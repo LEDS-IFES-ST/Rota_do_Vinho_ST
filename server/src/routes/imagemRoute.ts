@@ -1,18 +1,17 @@
 import { Router } from 'express';
 import { imagemController } from '../controllers/imagemController';
 const multer = require('multer');
-
-import * as imgConfg from '../helper'
-var imgStorage = imgConfg.storage;
-var imgFilter = imgConfg.imgFilter; 
+import * as imgConfg from '../middlewares/helper'
 
 class ImagemRoutes {
     public router: Router = Router();
     private upload: any;
+    private imgStorage = imgConfg.storage;
+    private imgFilter = imgConfg.imgFilter; 
 
     constructor(){
-        this.upload = this.startImgUpload();
         this.config();
+        this.setupMulter();
     }
 
     config(): void {
@@ -24,15 +23,12 @@ class ImagemRoutes {
         this.router.post('/upload/', this.upload.single('avatar'), imagemController.uploadImg);
     }
 
-
-
-    startImgUpload(): any{
-        // Setting up upload sys.
-        const uploads = multer({
-            storage: imgStorage,
-            fileFilter: imgFilter 
+    private setupMulter():void {
+        this.upload = multer({
+            storage: this.imgStorage,
+            fileFilter: this.imgFilter 
         });
-        return uploads;
+
     }
 
 }

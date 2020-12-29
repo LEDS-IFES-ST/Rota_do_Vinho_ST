@@ -27,7 +27,6 @@ export default {
 }
 ```
 
-
 ```bash
 $ cd Rota-Do-Vinho/server/
 $ npm run build & npm run dev
@@ -40,3 +39,21 @@ $ npm run build & npm run dev
 * http://localhost:3000/api/
 
 https://documenter.getpostman.com/view/7407839/TVmS9G8u
+
+___
+## Upload de arquivos 
+
+* Limitado apenas p/ imagens nos formatos: .jpg/jpeg e .png
+
+<i>./middlewares/helper.ts</i>
+```javascript
+...
+    if (formatFile == 'jpeg' || formatFile == 'jpg' || formatFile == 'png') {
+        cb(null, true);
+    } else {
+        cb(null, false)
+    }
+...
+```
+
+* Nao aceita upload de arquivos simultaneos.
