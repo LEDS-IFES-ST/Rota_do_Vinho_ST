@@ -11,7 +11,7 @@ export const storage = multer.diskStorage({
     destination: function (req: Express.Request,
         file: Express.Multer.File,
         cb: (error: Error | null, path: string) => void) {
-        cb(null, __dirname + './../uploads/');
+        cb(null, __dirname + '../../../uploads/');
         // path: server/uploads/
         // dirname -> instancia dessa classe vai rodar dentro de /server/build/
     }
@@ -21,9 +21,9 @@ export const storage = multer.diskStorage({
 export const imgFilter = function (req: Express.Request,
     file: Express.Multer.File,
     cb: (error: Error | null, filename: boolean) => void) {
-    var formatFile = file.mimetype.split('/')[1];
+    var fileFormat = file.mimetype.split('/')[1].toLocaleLowerCase();
     try {
-        if (formatFile == 'jpeg' || formatFile == 'jpg' || formatFile == 'png') {
+        if (fileFormat == 'jpeg'|| fileFormat == 'jpg' || fileFormat == 'png') {
             cb(null, true);
         } else {
             cb(null, false);

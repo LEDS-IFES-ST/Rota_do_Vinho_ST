@@ -1,6 +1,7 @@
 import express, {Application} from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import path from 'path';
 
 import indexRoutes from './routes/indexRoutes';
 import empresaRoutes from './routes/empresaRoutes'
@@ -30,6 +31,8 @@ class Server {
     }
 
     routes(): void{
+        var folderPath = path.join(__dirname + '/../uploads/')
+        this.app.use('/imgs', express.static(folderPath)); // http://localhost:3000/imgs/nomeImagem.jpg
         this.app.use('/', indexRoutes);
         this.app.use('/api/vinicolaControl', vinicolasRoutes);
         this.app.use('/api/empresaControl', empresaRoutes);
