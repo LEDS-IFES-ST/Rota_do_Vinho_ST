@@ -112,6 +112,7 @@ dist
 ##### Ignore pra files do projeto
 server/node_modules/
 server/build/
+server/uploads/ 
 
 # Arquivo de configuracao do banco de dados
 server/src/key.ts

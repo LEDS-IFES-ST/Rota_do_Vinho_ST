@@ -11,6 +11,7 @@ class EmpresaRoutes {
         this.router.get('/avist/', empresaController.getAvistInfo);
         this.router.get('/', empresaController.showAll);
         this.router.get('/vinicolas/', empresaController.listaVinicolas);
+        this.router.get('/getEmpresa/:id', empresaController.getEmpresaByID);
         this.router.post('/addEmpresa/', empresaController.addEmpresa);
     }
 
