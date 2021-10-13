@@ -12,11 +12,15 @@ import contatoRoutes from './routes/contatoRoute';
 import imagemRoutes from './routes/imagemRoute';
 import pessoaRoutes from './routes/pessoaRoute';
 
+import dbConfig from "./key";
+
+import knexConfig from "./knexfile"
+import Knex from 'knex';
 
 class Server { 
     public app: Application;
-
-    constructor(){
+    const db = Knex(knexConfig["development"])
+constructor(){
         this.app = express();
         this.config();
         this.routes();
@@ -28,15 +32,34 @@ class Server {
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.urlencoded({extended: false}));
+        this.setupKnex();
     }
 
-    routes(): void{
+    private async setupKnex(): Promise<void> {
+        try {
+            const res = await this.db.raw("select 1+1 as primeiro_contato");
+            const tst = await this.db.raw("desc Empresa");
+
+            console.log("[KNEX" + tst);
+            
+            console.log("[KNEX]: Conectado do Banco de dadosn " + knexConfig.development.connection.host + ":" +
+                knexConfig.development.connection.port + "@" +
+                knexConfig.development.connection.user + " - DB: " +
+                knexConfig.development.connection.database
+            );
+        } catch (error) {
+            throw new Error("[KNEX]: Falha ao conectar banco de dados \n " + knexConfig.development.connection.host + ":");
+
+        }
+    }
+
+    routes(): void {
         var folderPath = path.join(__dirname + '/../uploads/')
         this.app.use('/imgs', express.static(folderPath)); // http://localhost:3000/imgs/nomeImagem.jpg
         this.app.use('/', indexRoutes);
         this.app.use('/api/vinicolaControl', vinicolasRoutes);
         this.app.use('/api/empresaControl', empresaRoutes);
-        this.app.use('/api/enderecoControl', enderecoRoutes); 
+        this.app.use('/api/enderecoControl', enderecoRoutes);
         this.app.use('/api/infoControl', informacaoRoutes);
         this.app.use('/api/imagemControl', imagemRoutes);
         this.app.use('/api/contatoControl', contatoRoutes);
@@ -44,7 +67,7 @@ class Server {
 
     }
 
-    start(): void{
+    start(): void {
         this.app.listen(this.app.get('port'), () => {
             console.log(`
             ██╗     ███████╗██████╗ ███████╗                  
@@ -64,7 +87,7 @@ class Server {
         });
 
     }
-    
+
 
 }
 
