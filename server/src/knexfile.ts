@@ -1,5 +1,5 @@
 // Update with your config settings.
-export default {
+export const knexdb = {
   development: {
     client: 'mysql2',
     connection: {

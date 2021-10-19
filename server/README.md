@@ -12,24 +12,24 @@ Novo repositório do sistema da Rota do Vinho da Avist
 $ git clone >repositorio< 
 ```
 ```bash
-$ cd Rota-Do-Vinho/server/
-[darkzera ~/projetos/Rota_do_Vinho/server/]$ docker-compose up -d 
-[darkzera ~/projetos/Rota_do_Vinho/server/]$ docker logs rota_vinicolas
+$ cd Rota-Do-Vinho/ /
+[darkzera ~/projetos/Rota_do_Vinho/ ]$ docker-compose up -d 
+[darkzera ~/projetos/Rota_do_Vinho/ ]$ docker logs rota_vinicolas
 ```
 
 ### Flow basico do container:
 
 ```bash
-[darkzera ~/projetos/Rota_do_Vinho/server/]$ docker-compose up -d -> inicializa o container já com algumas confs.
-[darkzera ~/projetos/Rota_do_Vinho/server/]$ docker container list --all
-[darkzera ~/projetos/Rota_do_Vinho/server/]$ docker stop rota_vinicolas -> FINALIZA o container
-[darkzera ~/projetos/Rota_do_Vinho/server/]$ docker rm rota_vinicolas -> REMOVE o container
+[darkzera ~/projetos/Rota_do_Vinho/ ]$ docker-compose up -d -> inicializa o container já com algumas confs.
+[darkzera ~/projetos/Rota_do_Vinho/ ]$ docker container list --all
+[darkzera ~/projetos/Rota_do_Vinho/ ]$ docker stop rota_vinicolas -> FINALIZA o container
+[darkzera ~/projetos/Rota_do_Vinho/ ]$ docker rm rota_vinicolas -> REMOVE o container
 ```
 
 Caso queira remover e limpar o container pra subir ele do zero novamente:
 ```bash
-[darkzera ~/projetos/Rota_do_Vinho/server/]$ docker-compose down -v
-[darkzera ~/projetos/Rota_do_Vinho/server/]$ docker-compose up -d 
+[darkzera ~/projetos/Rota_do_Vinho/ ]$ docker-compose down -v
+[darkzera ~/projetos/Rota_do_Vinho/ ]$ docker-compose up -d 
 ```
 <b>DEPENDENDO DAS CONFIGURACOES DO SIS.OPERACIONAL o Docker pode requisitar autoridade de super usuário. Nesse caso, utilizar sudo ... antes de todos os comandos acima</b>
 

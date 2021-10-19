@@ -14,13 +14,14 @@ import pessoaRoutes from './routes/pessoaRoute';
 
 import dbConfig from "./key";
 
-import knexConfig from "./knexfile"
+import { knexdb } from "./knexfile"
 import Knex from 'knex';
 
 class Server { 
     public app: Application;
-    const db = Knex(knexConfig["development"])
-constructor(){
+    private db = Knex(knexdb.development)
+
+    constructor() {
         this.app = express();
         this.config();
         this.routes();
@@ -31,24 +32,20 @@ constructor(){
         this.app.use(morgan('dev'));
         this.app.use(cors());
         this.app.use(express.json());
-        this.app.use(express.urlencoded({extended: false}));
+        this.app.use(express.urlencoded({ extended: false }));
         this.setupKnex();
     }
 
     private async setupKnex(): Promise<void> {
         try {
             const res = await this.db.raw("select 1+1 as primeiro_contato");
-            const tst = await this.db.raw("desc Empresa");
-
-            console.log("[KNEX" + tst);
-            
-            console.log("[KNEX]: Conectado do Banco de dadosn " + knexConfig.development.connection.host + ":" +
-                knexConfig.development.connection.port + "@" +
-                knexConfig.development.connection.user + " - DB: " +
-                knexConfig.development.connection.database
+            console.log("[KNEX]: Conectado do Banco de dados" + knexdb.development.connection.host + ":" +
+                knexdb.development.connection.port + "@" +
+                knexdb.development.connection.user + " - DB: " +
+                knexdb.development.connection.database
             );
         } catch (error) {
-            throw new Error("[KNEX]: Falha ao conectar banco de dados \n " + knexConfig.development.connection.host + ":");
+            throw new Error("[KNEX]: Falha ao conectar banco de dados \n " + knexdb.development.connection.host + ":");
 
         }
     }
