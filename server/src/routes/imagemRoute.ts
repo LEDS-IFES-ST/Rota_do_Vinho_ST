@@ -17,13 +17,12 @@ class ImagemRoutes {
     }
 
     config(): void {
-        this.router.get('/vinID/:id', imagemController.getImagemByID);
         this.router.get('/carrosselMain', imagemController.fotosCarrosselMain);
-        this.router.get('/', imagemController.listaAll);
         this.router.get('/ftvinicola/:id', imagemController.ftosVinicolaByID);
+        this.router.get('/:id', imagemController.ftosVinicolaByID);
         // this.router.post('/addImagem/', imagemController.create);
         this.router.delete('/:id', imagemController.delete);
-        this.router.post('/upload/',this.upload.single('avatar'), imagemController.uploadImg);
+        this.router.post('/upload/',this.upload.single('file'), imagemController.uploadImg);
     }
 
 

@@ -11,12 +11,14 @@ import env from "../helpers/env";
 
 class ImagemModel {
 
+    // DEPRECATED
     public getAllImg(): Promise<Response>{
         let list: any;
         list = pool.query('select * from Imagem');
         return list;
     }
 
+    // DEPRECATED
     public getImgByID(imgIdEmpresa: string): Promise<Response>{
         let img: any; 
         img = pool.query('select * from Imagem where Empresa_codEmpresa =?', imgIdEmpresa)
@@ -24,12 +26,7 @@ class ImagemModel {
         return img;
     }
 
-    /*
-    Metodo pra busca de fotos para montagem do carrossel da pag. principal
-    Uma foto de cada vinicola 
-    Adicionar ao array final p. retornar path e codEmpresa
-    TODO:// fix for - length query - 
-    */
+    // DEPRECATED
     public getFtsCarrosselMain(req: Request): Promise<any> {
         let list: any;
         let i = 0;
@@ -45,9 +42,11 @@ class ImagemModel {
     }
 
 
-    public addImg(file: Express.Multer.File){
+    // DEPRECATED
+    public async addImg(file: Express.Multer.File): Promise<String>{
         var imgName = file.filename;
-        // //
+        /* 
+        */
         var fakeData = { 
             Empresa_codEmpresa: 1,
             TipoImagem_codTipoImagem: tipoImagem.FOTOS,
@@ -56,8 +55,8 @@ class ImagemModel {
             ordemApresentacao: 1,
         }
         // //
-        pool.query('insert into Imagem set ?', [fakeData])
-
+        await pool.query('insert into Imagem set ?', [fakeData])
+        return fakeData.pathImagem;
     }
 
 }

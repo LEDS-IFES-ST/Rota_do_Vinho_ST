@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { pool } from '../database';
 import { imagemModel } from "../models/imagemModel";
-import { util } from "../util";
 import env from '../helpers/env';
 import { imgFilter } from '../middlewares/helper';
+import { imagemRepository } from "../repository/ImagemRepository";
 
 
 class ImagemController {
@@ -14,13 +14,6 @@ class ImagemController {
         res.json(list);
     }
 
-
-    public async getImagemByID(req: Request, res: Response) {
-        var id2 = util.formatIdByReq(req);
-        var imagem = await imagemModel.getImgByID(id2);
-        console.log(imagem)
-        res.json(imagem);
-    }
 
     public async create(req: Request, res: Response): Promise<void> {
         await pool.query('insert into Imagem set ? ', [req.body])
@@ -37,50 +30,74 @@ class ImagemController {
     }
 
 
-    public async fotosCarrosselMain(req: Request, res: Response): Promise<any> {
-        // let length: number;
-        var list = await imagemModel.getFtsCarrosselMain(req);
-        console.log(list)
-        res.json(list);
+    public async fotosCarrosselMain(req:Request, res: Response): Promise<any> {
+        interface imageData {
+            pathImagem: String;
+            Empresa_codEmpresa: Number;
+        }
+
+        try {
+            const carrossel: imageData[] = await imagemRepository.getFtsCarrosselMain();
+            
+            return res.status(200).json({
+                data: carrossel,
+                status: 200
+            });
+
+        } catch (error) {
+            return res.status(500).json({
+                error: "[" + "] ->" + Error.captureStackTrace + error,
+                status: 500
+            });
+
+        }
     }
 
     public async ftosVinicolaByID(req: Request, res: Response): Promise<any> {
         const id = req.params.id;
-        var str = id.split(',', 2);
-        let list: any[][0];
-        let i = 0;
+        
         try {
-            for (i = 0; i < 5; i++) {
-                list = await pool.query('select Empresa_codEmpresa, pathImagem from Imagem where TipoImagem_codTipoImagem <> 1 and Empresa_codEmpresa = ? ', str[0]);
-            }
+            const imagem = await imagemRepository.getFotoById(parseInt(id));
+            res.status(200)
+            return res.json({ imagem });
         } catch (error) {
-            console.log(error);
-            console.log("Please report this error");
+            return res.status(500).json({
+                error: "[" +"] ->" + Error.captureStackTrace + error,
+                status: 500
+            });
         }
-        res.status(200)
-        return res.json({ list });
 
     }
 
     public async uploadImg(req: Request, res: Response): Promise<any> {
+        // TODO: FIXME::not working propely
+        /* 
+        -   1) Modularizar
+        -   2) Testar o envio via aplicaçao web (nao me lembro se ta funcionando direitinho +)
+                -> Obter parametros para validar os envios das imagens (Vinicola associada, tipo de imagem etc..)
+                -> Envio por requisiçao pura (????)
+        -   ...
+
+        -   3) Validaçao de outras informacoes vindo do frontend (#2)
+        */
         try {
-            let file = req.file;
-            if (!file) {
+            const file = req.file;
+            if (!file || file == undefined) {
                 res.status(401);
-                res.json('Something went wrong. Report this error')
+                res.json('[File not found] - Something went wrong. REPORT THIS ERROR')
             } else {
-                if (true) { // se alguma coisa do model for dado como OK (adicionado no db)
-                    imagemModel.addImg(file);
-                    res.status(200);
-                    res.json('- OK');
+                if (true) { // #3
+                    const path: String = await imagemModel.addImg(file);
+                    res.status(200).json({
+                        status: 200,
+                        path: path
+                    });
                 } else {
                     res.json('Deu nao migao')
                 }
-                // Pegar os outros dados da requisicao:
-                // Monto o objeto imagem e mando pro metodo p. add!
             }
         } catch (err) {
-            console.log(err)
+            throw new Error("" + err);
         }
     }
 
